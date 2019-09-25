@@ -2,7 +2,9 @@ import React from "react";
 
 const contentView: React.FunctionComponent = () => {
     return (
-        <p>Content</p>
+        <section>
+            <p>Content</p>
+        </section>
     )
 };
 

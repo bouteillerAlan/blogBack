@@ -2,7 +2,9 @@ import React from 'react';
 
 const categoriesView: React.FunctionComponent = () => {
     return (
-        <p>Categories</p>
+        <section>
+            <p>Categories</p>
+        </section>
     )
 };
 

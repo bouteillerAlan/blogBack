@@ -12,6 +12,9 @@ import NavbarView from "../view/Navbar.view";
 // history
 const history = createBrowserHistory();
 
+interface Props {}
+interface State {}
+
 class App extends Component {
     constructor(props: any) {
       super(props);
