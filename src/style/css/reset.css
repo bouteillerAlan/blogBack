@@ -1,0 +1,14 @@
+/*reset*/
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    /*it's a very personal choice to make this here*/
+    /*makes sure that the padding and border are included in the total width and height of the elements*/
+    box-sizing: border-box;
+}
+
+/*scroll*/
+html {
+    scroll-behavior: smooth;
+}
