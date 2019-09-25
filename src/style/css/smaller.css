@@ -24,6 +24,8 @@ html {
     /*light theme*/
     --light-background : #ecf0f1;
     --light-text : #282c34;
+    /*primary*/
+    --second-background : #efbb35;
 }
 
 /*body*/
@@ -66,4 +68,55 @@ body {
 /*section*/
 section {
     padding: 15px;
+}
+
+/*input*/
+.input-block {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0 10px 0;
+}
+
+.input-block label {
+    padding: 0 0 5px 0;
+}
+
+input[type=text], input[type=password], textarea {
+    color: var(--dark-text);
+    background-color: var(--dark-background);
+    border-bottom: solid var(--second-background) 2px;
+}
+
+input:focus {
+    outline: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--dark-text);
+    -webkit-box-shadow: 0 0 0 1000px var(--dark-background) inset;
+}
+
+textarea {
+    min-height: max-content;
+    height: 1rem;
+}
+
+/*button*/
+button {
+    padding: 5px 10px 5px 10px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    background-color: var(--second-background);
+}
+
+button:hover {
+    cursor: pointer;
 }
