@@ -71,6 +71,12 @@ body {
 
 input {
     height: 1.5em;
+    padding-bottom: 2px;
+}
+
+textarea {
+    resize: none;
+    min-height: 5rem;
 }
 
 input[type=text], input[type=password], textarea {
@@ -79,7 +85,7 @@ input[type=text], input[type=password], textarea {
     border-bottom: solid var(--second-background) 2px;
 }
 
-input:focus {
+textarea:focus, input:focus {
     outline: none;
 }
 
@@ -96,11 +102,6 @@ select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
     -webkit-text-fill-color: var(--dark-text);
     -webkit-box-shadow: 0 0 0 1000px var(--dark-background) inset;
-}
-
-textarea {
-    min-height: max-content;
-    height: 1rem;
 }
 
 /*button*/
