@@ -17,26 +17,31 @@
     --light-text : #282c34;
     --light-focus : #464a4b;
     --light-shadow : rgba(0, 0, 0, 0.14) 0 2px 2px 0, rgba(0, 0, 0, 0.12) 0 3px 1px -2px, rgba(0, 0, 0, 0.2) 0 1px 5px 0;
-    /*primary*/
+    /*other*/
     --second-background : #efbb35;
+    /*apply*/
+    --primary-background : var(--dark-background);
+    --primary-text : var(--dark-text);
+    --primary-shadow : var(--dark-shadow);
+    --primary-focus : var(--dark-focus);
 }
 
 /*body*/
 body {
-    background-color: var(--dark-background);
-    color: var(--dark-text);
+    background-color: var(--primary-background);
+    color: var(--primary-text);
 }
 
 /*navbar*/
 .navbar {
-    background-color: var(--dark-background);
+    background-color: var(--primary-background);
     width: 100%;
     height: 60px;
-    box-shadow: var(--dark-shadow);
+    box-shadow: var(--primary-shadow);
 }
 
 .navbar a {
-    color: var(--dark-text);
+    color: var(--primary-text);
     text-decoration: none;
 }
 
@@ -54,8 +59,8 @@ body {
 }
 
 .navbar ul li:hover {
-    background-color: var(--dark-focus);
-    color: var(--dark-text);
+    background-color: var(--primary-focus);
+    color: var(--primary-text);
     cursor: pointer;
 }
 
@@ -80,8 +85,8 @@ textarea {
 }
 
 input[type=text], input[type=password], textarea {
-    color: var(--dark-text);
-    background-color: var(--dark-background);
+    color: var(--primary-text);
+    background-color: var(--primary-background);
     border-bottom: solid var(--second-background) 2px;
 }
 
@@ -100,8 +105,8 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-    -webkit-text-fill-color: var(--dark-text);
-    -webkit-box-shadow: 0 0 0 1000px var(--dark-background) inset;
+    -webkit-text-fill-color: var(--primary-text);
+    -webkit-box-shadow: 0 0 0 1000px var(--primary-background) inset;
 }
 
 /*button*/
@@ -119,6 +124,7 @@ button:hover {
 /*table*/
 table {
     width: 100%;
+    max-width: 100% !important;
 }
 
 table[class*="center"] td, table[class*="center"] th {
@@ -133,9 +139,18 @@ table, th, td {
 th, td {
     padding: 15px;
     text-align: left;
+    min-width: 100px;
+}
+
+table[class*="breakAll"] > tbody td {
+    word-break: break-all;
+}
+
+table[class*="breakWord"] > tbody td {
+    word-break: break-word;
 }
 
 table[class*="over"] > tbody tr:hover {
-    background-color: var(--dark-focus);
+    background-color: var(--primary-focus);
     cursor: pointer;
 }
