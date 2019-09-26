@@ -1,32 +1,28 @@
 import React from 'react';
 
-const authorView: React.FunctionComponent = () => {
+const authorView: React.FunctionComponent = (authorList: any) => {
     return (
-        <section className="container row">
-            <div className="input-block col-xs_6">
-                <label htmlFor="firstName">First name </label>
-                <input type="text" name="firstName" id="firstName"/>
-            </div>
-
-            <div className="input-block col-xs_6">
-                <label htmlFor="lastName">Last name </label>
-                <input type="text" name="lastName" id="lastName"/>
-            </div>
-
-            <div className="input-block col-xs_12 col-l_12">
-                <label htmlFor="password">Password </label>
-                <input type="password" name="password" id="password"/>
-            </div>
-
-            <div className="input-block col-xs_12 col-l_12">
-                <label htmlFor="password">Message </label>
-                <textarea name="message" id="message"> </textarea>
-            </div>
-
-            <div className="col-xs_12 col-l_12">
-                <button className="submit">Send</button>
-            </div>
-
+        <section className="container">
+            <table className="center over breakWord">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Password</th>
+                    <th>Token</th>
+                </tr>
+                </thead>
+                <tbody>
+                {authorList.map((el: any) => (
+                    <tr>
+                        <td>{el._id}</td>
+                        <td>{el.name}</td>
+                        <td>{el.password}</td>
+                        <td>{el.token}</td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
         </section>
     )
 };
