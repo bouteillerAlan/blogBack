@@ -80,9 +80,10 @@ class Author extends React.Component<Props, State> {
 
         return (
             <section className="container">
+                {callbackMessageData&&
                 <div className="col-xs_12">
                     {callbackMessageData}
-                </div>
+                </div>}
                 {categoriesList&&
                 <table className="center over breakWord">
                     <thead>
@@ -105,7 +106,7 @@ class Author extends React.Component<Props, State> {
                     <div className="input-block col-xs_6">
                         <label htmlFor="name">Name </label>
                         <input type="text" name="name" id="name" value={name} onChange={(event) => {this.handleForm(event)}}/>
-                        {errorName}
+                        {errorName&& <span className="error">{errorName}</span>}
                     </div>
 
                     <div className="col-xs_12">
@@ -113,7 +114,7 @@ class Author extends React.Component<Props, State> {
                     </div>
 
                     <div className="col-xs_12">
-                        {callbackMessageForm}
+                        {callbackMessageForm&& <span className="error">{callbackMessageForm}</span>}
                     </div>
                 </div>
             </section>

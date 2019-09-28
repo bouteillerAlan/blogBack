@@ -135,13 +135,13 @@ class Author extends React.Component<Props, State> {
 
         return (
             <section className="container">
-                <div className="col-xs_12">
+                {(callbackMessageDataAuthor || callbackMessageDataCategories || callbackMessageDataContent)&& <div className="col-xs_12 error">
                     {callbackMessageDataAuthor}
                     <br/>
                     {callbackMessageDataCategories}
                     <br/>
                     {callbackMessageDataContent}
-                </div>
+                </div>}
                 {contentList&&
                 <table className="center over breakWord">
                     <thead>
@@ -168,26 +168,26 @@ class Author extends React.Component<Props, State> {
                     <div className="input-block col-xs_12">
                         <label htmlFor="title">Title </label>
                         <input type="text" name="title" id="title" value={title} onChange={(event) => {this.handleForm(event)}}/>
-                        {errorTitle}
+                        {errorTitle&& <span className="error">{errorTitle}</span>}
                     </div>
 
                     <div className="input-block col-xs_6">
                         <label htmlFor="author">Author </label>
                         <input type="text" name="author" id="author" value={author} onChange={(event) => {this.handleForm(event)}}/>
-                        {errorAuthor}
+                        {errorAuthor&& <span className="error">{errorAuthor}</span>}
                     </div>
 
                     <div className="input-block col-xs_6">
                         <label htmlFor="category">Category </label>
                         <input type="text" name="category" id="category" value={category} onChange={(event) => {this.handleForm(event)}}/>
-                        {errorCategory}
+                        {errorCategory&& <span className="error">{errorCategory}</span>}
                     </div>
 
                     <div className="input-block col-xs_12">
                         <label htmlFor="content">Content </label>
                         <textarea name="content" id="content" value={content} onChange={(event) => {this.handleForm(event)}}>
                         </textarea>
-                        {errorContent}
+                        {errorContent&& <span className="error">{errorContent}</span>}
                     </div>
 
                     <div className="col-xs_12">
@@ -195,7 +195,7 @@ class Author extends React.Component<Props, State> {
                     </div>
 
                     <div className="col-xs_12">
-                        {callbackMessageForm}
+                        {callbackMessageForm&& <span className="error">{callbackMessageForm}</span>}
                     </div>
                 </div>
             </section>

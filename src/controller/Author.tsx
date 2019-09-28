@@ -87,9 +87,10 @@ class Author extends React.Component<Props, State> {
 
         return (
             <section className="container">
-                <div className="col-xs_12">
+                {callbackMessageData &&
+                <div className="col-xs_12 error">
                     {callbackMessageData}
-                </div>
+                </div>}
                 {authorList&&
                 <table className="center over breakWord">
                     <thead>
@@ -116,13 +117,13 @@ class Author extends React.Component<Props, State> {
                     <div className="input-block col-xs_6">
                         <label htmlFor="firstName">First name </label>
                         <input type="text" name="firstName" id="firstName" value={firstName} onChange={(event) => {this.handleForm(event)}}/>
-                        {errorFirstName}
+                        {errorFirstName&& <span className="error">{errorFirstName}</span>}
                     </div>
 
                     <div className="input-block col-xs_6">
                         <label htmlFor="password">Password </label>
                         <input type="password" name="password" id="password" value={password} onChange={(event) => {this.handleForm(event)}}/>
-                        {errorPassword}
+                        {errorPassword&& <span className="error">{errorPassword}</span>}
                     </div>
 
                     <div className="col-xs_12">
@@ -130,7 +131,7 @@ class Author extends React.Component<Props, State> {
                     </div>
 
                     <div className="col-xs_12">
-                        {callbackMessageForm}
+                        {callbackMessageForm&& <span className="error">{callbackMessageForm}</span>}
                     </div>
                 </div>
             </section>
