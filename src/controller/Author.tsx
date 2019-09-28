@@ -5,7 +5,9 @@ interface Props {}
 interface State {
     authorList: any,
     firstName : string,
+    errorFirstName : string,
     password : string,
+    errorPassword : string,
     callbackMessageForm : any,
     callbackMessageData : any
 }
@@ -16,7 +18,9 @@ class Author extends React.Component<Props, State> {
         this.state = {
             authorList: null,
             firstName : '',
+            errorFirstName : '',
             password : '',
+            errorPassword: '',
             callbackMessageForm : null,
             callbackMessageData : null
         }
@@ -40,44 +44,46 @@ class Author extends React.Component<Props, State> {
 
     handleForm = (e: any) => {
         if (e.target.id === 'firstName') {
-            this.setState({firstName:e.target.value})
+            this.setState({firstName:e.target.value, errorFirstName : e.target.value.length > 3 ? '' : 'min 3 characters'})
         } else if (e.target.id === 'password') {
-            this.setState({password:e.target.value})
+            this.setState({password:e.target.value, errorPassword : e.target.value.length > 5 ? '' : 'min 5 characters'})
         }
     };
 
     submitForm = (e: any) => {
         e.preventDefault();
-        const {firstName, password} = this.state;
+        const {firstName, password, errorPassword, errorFirstName} = this.state;
 
-        fetch('http://localhost:3001/author/add', {
-            method : 'POST',
-            body : JSON.stringify({
-                name : firstName,
-                password,
-            }),
-            headers : {
-                'Accept' : 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-        .then((res) => {
-            res.json().then((resp) => {
-                console.log(resp);
-                this.setState({
-                    callbackMessageForm : resp
+        if (errorPassword === '' && errorFirstName === '') {
+            fetch('http://localhost:3001/author/add', {
+                method : 'POST',
+                body : JSON.stringify({
+                    name : firstName,
+                    password,
+                }),
+                headers : {
+                    'Accept' : 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then((res) => {
+                    res.json().then((resp) => {
+                        console.log(resp);
+                        this.setState({
+                            callbackMessageForm : resp
+                        })
+                    })
                 })
-            })
-        })
-        .catch((err) => {
-            this.setState({
-                callbackMessageForm : '[postData] ' + err.toString()
-            })
-        })
+                .catch((err) => {
+                    this.setState({
+                        callbackMessageForm : '[postData] ' + err.toString()
+                    })
+                })
+        }
     };
 
     render() {
-        const {authorList, firstName, password, callbackMessageForm, callbackMessageData} = this.state;
+        const {authorList, firstName, password, callbackMessageForm, callbackMessageData, errorFirstName, errorPassword} = this.state;
 
         return (
             <section className="container">
@@ -110,11 +116,13 @@ class Author extends React.Component<Props, State> {
                     <div className="input-block col-xs_6">
                         <label htmlFor="firstName">First name </label>
                         <input type="text" name="firstName" id="firstName" value={firstName} onChange={(event) => {this.handleForm(event)}}/>
+                        {errorFirstName}
                     </div>
 
                     <div className="input-block col-xs_6">
                         <label htmlFor="password">Password </label>
                         <input type="password" name="password" id="password" value={password} onChange={(event) => {this.handleForm(event)}}/>
+                        {errorPassword}
                     </div>
 
                     <div className="col-xs_12">
