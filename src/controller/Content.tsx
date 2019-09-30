@@ -1,5 +1,6 @@
 import * as React from 'react';
-import getData from "../function/getData";
+import getData from '../function/getData';
+import isBlank from '../function/isBlank';
 
 interface Props {}
 interface State {
@@ -17,7 +18,8 @@ interface State {
     callbackMessageForm : any,
     callbackMessageDataAuthor : any,
     callbackMessageDataCategories : any,
-    callbackMessageDataContent : any
+    callbackMessageDataContent : any,
+    callbackMessageFormSend : any
 }
 
 class Author extends React.Component<Props, State> {
@@ -38,12 +40,13 @@ class Author extends React.Component<Props, State> {
             callbackMessageForm : null,
             callbackMessageDataAuthor : null,
             callbackMessageDataCategories : null,
-            callbackMessageDataContent : null
+            callbackMessageDataContent : null,
+            callbackMessageFormSend : null
         }
     }
 
     componentDidMount(): any {
-        getData('http://localhost:3001/content/all', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSGFkb2NrIiwic3ViIjoiNWQ4YTE2MWI3OWYwMGI3OTc4NzZiNzUyIiwiaWF0IjoxNTY5NDg5MjEwLCJleHAiOjE1Njk1MDEyMTB9.FSwflQEUvVoU_vbiUmngJSgCmuKB1ma8G9MfPHgHKQ8')
+        getData('http://localhost:3001/content/all', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSGFkb2NrIiwic3ViIjoiNWQ4YTE2MWI3OWYwMGI3OTc4NzZiNzUyIiwiaWF0IjoxNTY5ODI2Njg1LCJleHAiOjE1Njk4Mzg2ODV9.1FB4sj3YmO2_52dMc7up4tVcSr28zmJ-Yo1JJNaL4cQ')
             .then((res) => {
                 if (res.status) {
                     this.setState({
@@ -56,7 +59,7 @@ class Author extends React.Component<Props, State> {
                     callbackMessageDataContent : '[getData]content ' + err.toString()
                 })
             });
-        getData('http://localhost:3001/categories/all', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSGFkb2NrIiwic3ViIjoiNWQ4YTE2MWI3OWYwMGI3OTc4NzZiNzUyIiwiaWF0IjoxNTY5NDg5MjEwLCJleHAiOjE1Njk1MDEyMTB9.FSwflQEUvVoU_vbiUmngJSgCmuKB1ma8G9MfPHgHKQ8')
+        getData('http://localhost:3001/categories/all', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSGFkb2NrIiwic3ViIjoiNWQ4YTE2MWI3OWYwMGI3OTc4NzZiNzUyIiwiaWF0IjoxNTY5ODI2Njg1LCJleHAiOjE1Njk4Mzg2ODV9.1FB4sj3YmO2_52dMc7up4tVcSr28zmJ-Yo1JJNaL4cQ')
             .then((res) => {
                 if (res.status) {
                     this.setState({
@@ -69,7 +72,7 @@ class Author extends React.Component<Props, State> {
                     callbackMessageDataCategories : '[getData]categories ' + err.toString()
                 })
             });
-        getData('http://localhost:3001/author/all', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSGFkb2NrIiwic3ViIjoiNWQ4YTE2MWI3OWYwMGI3OTc4NzZiNzUyIiwiaWF0IjoxNTY5NDg5MjEwLCJleHAiOjE1Njk1MDEyMTB9.FSwflQEUvVoU_vbiUmngJSgCmuKB1ma8G9MfPHgHKQ8')
+        getData('http://localhost:3001/author/all', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSGFkb2NrIiwic3ViIjoiNWQ4YTE2MWI3OWYwMGI3OTc4NzZiNzUyIiwiaWF0IjoxNTY5ODI2Njg1LCJleHAiOjE1Njk4Mzg2ODV9.1FB4sj3YmO2_52dMc7up4tVcSr28zmJ-Yo1JJNaL4cQ')
             .then((res) => {
                 if (res.status) {
                     this.setState({
@@ -90,9 +93,9 @@ class Author extends React.Component<Props, State> {
         } else if (e.target.id === 'author') {
             this.setState({author:e.target.value, errorAuthor : e.target.value.length > 3 ? '' : 'min 3 characters'})
         } else if (e.target.id === 'category') {
-            this.setState({author:e.target.value, errorAuthor : e.target.value.length > 5 ? '' : 'min 5 characters'})
+            this.setState({category:e.target.value, errorCategory : e.target.value.length > 5 ? '' : 'min 5 characters'})
         } else if (e.target.id === 'content') {
-            this.setState({author:e.target.value, errorAuthor : e.target.value.length > 5 ? '' : 'min 5 characters'})
+            this.setState({content:e.target.value, errorContent : e.target.value.length > 5 ? '' : 'min 5 characters'})
         }
     };
 
@@ -101,37 +104,47 @@ class Author extends React.Component<Props, State> {
         const {title, author, category, content, errorAuthor, errorTitle, errorContent, errorCategory} = this.state;
 
         if (errorAuthor === '' && errorTitle === '' && errorContent === '' && errorCategory === '') {
-            fetch('http://localhost:3001/author/add', {
+            fetch('http://localhost:3001/content/add', {
                 method : 'POST',
                 body : JSON.stringify({
-                    title,
-                    author,
-                    category,
-                    content
+                    title: title,
+                    author: author,
+                    category: category,
+                    content: content
                 }),
                 headers : {
-                    'Accept' : 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSGFkb2NrIiwic3ViIjoiNWQ4YTE2MWI3OWYwMGI3OTc4NzZiNzUyIiwiaWF0IjoxNTY5ODI2Njg1LCJleHAiOjE1Njk4Mzg2ODV9.1FB4sj3YmO2_52dMc7up4tVcSr28zmJ-Yo1JJNaL4cQ'
                 }
             })
                 .then((res) => {
                     res.json().then((resp) => {
-                        console.log(resp);
-                        this.setState({
-                            callbackMessageForm : resp
-                        })
+                        if (resp.statusCode) {
+                            this.setState({
+                                callbackMessageForm : resp.statusCode ? '[postData] ' + resp.error : resp,
+                            })
+                        } else if (resp.status) {
+                            this.setState({
+                                callbackMessageFormSend : resp.status ? 'data send' : '',
+                                title : '',
+                                author : '',
+                                category : '',
+                                content : ''
+                            })
+                        }
+
                     })
                 })
                 .catch((err) => {
                     this.setState({
-                        callbackMessageForm : '[postData] ' + err.toString()
+                        callbackMessageForm : err.statusCode ? '[postData] ' + err.error : '[postData] ' + err.toString()
                     })
                 })
         }
     };
 
     render() {
-        const {contentList, title, author, category, content, callbackMessageForm, callbackMessageDataAuthor, callbackMessageDataCategories, callbackMessageDataContent, errorTitle, errorAuthor, errorContent, errorCategory} = this.state;
+        const {contentList, title, author, category, content, callbackMessageForm, callbackMessageDataAuthor, callbackMessageDataCategories, callbackMessageDataContent, errorTitle, errorAuthor, errorContent, errorCategory, callbackMessageFormSend} = this.state;
 
         return (
             <section className="container">
@@ -157,8 +170,8 @@ class Author extends React.Component<Props, State> {
                         <tr>
                             <td>{el._id}</td>
                             <td>{el.title}</td>
-                            <td>{el.author}</td>
-                            <td>{el.category}</td>
+                            <td>{el.author[0] ? el.author[0].name : ''}</td>
+                            <td>{el.category[0] ? el.category[0].name : ''}</td>
                         </tr>
                     ))}
                     </tbody>
@@ -196,6 +209,7 @@ class Author extends React.Component<Props, State> {
 
                     <div className="col-xs_12">
                         {callbackMessageForm&& <span className="error">{callbackMessageForm}</span>}
+                        {callbackMessageFormSend&& <span className="success">{callbackMessageFormSend}</span>}
                     </div>
                 </div>
             </section>
