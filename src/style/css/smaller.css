@@ -98,6 +98,10 @@ body {
     flex-direction: column;
 }
 
+.input-block span {
+    padding: 5px;
+}
+
 .input-block label {
     padding: 0 0 5px 0;
 }
