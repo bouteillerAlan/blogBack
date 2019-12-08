@@ -2,7 +2,7 @@
 import React from 'react';
 // router
 import {Route, Router} from 'react-router-dom';
-import { createBrowserHistory } from 'history';
+import history from '../history';
 // component
 import Author from './Author';
 import Content from './Content';
@@ -11,8 +11,6 @@ import NavbarView from '../view/Navbar.view';
 import Login from '../controller/Login';
 import handleLocalStorage from '../function/handleLocalStorage';
 import getData from '../function/getData';
-// history
-const history = createBrowserHistory();
 
 interface Props {}
 interface State {
@@ -49,7 +47,7 @@ class App extends React.Component<Props, State> {
         {isLogged &&
           <>
             <NavbarView/>
-            <Route exact path='/content' component={Content} />
+            <Route exact path='/contents' component={Content} />
             <Route exact path='/categories' component={Cat} />
             <Route exact path='/authors' component={Author} />
           </>

@@ -5,7 +5,7 @@ const NavbarView: React.FunctionComponent = () => {
     return (
         <div className={'navbar'}>
             <ul>
-                <Link to={'/'}>
+                <Link to={'/contents'}>
                     <li>Articles</li>
                 </Link>
                 <Link to={'/categories'}>
