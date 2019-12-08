@@ -186,3 +186,9 @@ table[class*="over"] > tbody tr:hover {
     background-color: var(--primary-focus);
     cursor: pointer;
 }
+
+/* chips */
+.chips {
+    padding: 10px;
+    border-radius: 3px;
+}
