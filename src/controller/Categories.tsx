@@ -81,7 +81,7 @@ class Author extends React.Component<Props, State> {
         return (
             <section className="container">
                 {callbackMessageData&&
-                <div className="col-xs_12">
+                <div className="col-xs_12 error">
                     {callbackMessageData}
                 </div>}
                 {categoriesList&&
