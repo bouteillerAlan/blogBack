@@ -36,17 +36,12 @@ class Login extends React.Component<Props, State> {
           getData('http://localhost:3001/auth/validate', res)
             .then((res: any) => {
               if (res.username) {
-                history.push('contents')
+                history.push('')
               }
             })
         }
       })
   };
-
-  componentDidMount(): void {
-    // if user is already logged redirect
-    this.checkLocalStorage();
-  }
 
   handleForm = (e: any) => {
     if (e.target.name === 'name') {
@@ -67,8 +62,7 @@ class Login extends React.Component<Props, State> {
             this.setState({callbackMessageDataLogin: ''});
             handleLocalStorage('create','jwt',res.access_token)
               .then(() => {
-                // redirect
-                this.checkLocalStorage();
+                history.push('/')
               })
           } else {
             this.setState({callbackMessageDataLogin: res.message});
@@ -94,6 +88,11 @@ class Login extends React.Component<Props, State> {
         </div>}
 
         <div>
+
+          <div className="col-xs_12">
+            <h1>Welcome to Trident back-end blog</h1>
+          </div>
+
           <div className="input-block col-xs_6">
             <label htmlFor="name">Id </label>
             <input type="text" name="name" id="name" value={name} onChange={(event) => {this.handleForm(event)}}/>

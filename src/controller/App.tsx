@@ -1,73 +1,76 @@
 // vanilla
 import React from 'react';
 // router
-import {Route, Router} from 'react-router-dom';
-import history from '../history';
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect
+} from 'react-router-dom';
 // component
-import Author from './Author';
-import Content from './Content';
-import Cat from './Categories';
-import NavbarView from '../view/Navbar.view';
 import Login from '../controller/Login';
 import handleLocalStorage from '../function/handleLocalStorage';
-import getData from '../function/getData';
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-// history
-const history = createBrowserHistory();
->>>>>>> b6055a6... :sparkles: feat(login): check if user is already logged
-=======
->>>>>>> a97f3e9... :sparkles: feat(login): add login
+import Content from "./Content";
+import Categories from "./Categories";
+import Author from "./Author";
+
+interface IProps {
+  exact?: boolean;
+  path: string;
+  component: React.ComponentType<any>;
+}
+
+async function checkUser () {
+  const auth = await handleLocalStorage('read', 'jwt');
+  console.log('function checkUser', auth);
+  if (auth) {
+    fetch('http://localhost:3001/auth/validate', {
+      headers: {
+        'Authorization' : `Bearer ${auth}`
+      }
+    }).then((res: any) => {
+      console.log('checkUser res>>>', res, res.status);
+      return res.status === 200;
+    })
+  }
+  return false
+}
+
+const PrivateRoute = ({ component: Component, ...rest }: IProps) => {
+  const auth = checkUser();
+  console.log(auth);
+  return (
+    <Route {...rest} render={(props) => (
+      auth
+        ? <Component {...props} />
+        : <Redirect to='/login' />
+    )} />
+  )
+};
+
+const Check = () => {
+  checkUser().then((res: boolean) => {
+    return res ? <Redirect to={'/contents'}/> : <Redirect to={'/login'}/>;
+  });
+  return <Redirect to={'/login'}/>;
+};
 
 interface Props {}
-interface State {
-  isLogged: boolean
-}
+interface State {}
 
 class App extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = {
-      isLogged: false
-    }
-  }
-
-  componentDidMount(): void {
-    handleLocalStorage('read','jwt')
-      .then((res: any) => {
-        if (res) {
-          getData('http://localhost:3001/auth/validate', res)
-            .then((res: any) => {
-              this.setState({isLogged: !!res.username});
-            })
-        }
-      })
+    this.state = {}
   }
 
   render() {
-    const {isLogged} = this.state;
     return (
-      <Router history={history}>
-        {!isLogged &&
-          <Route exact path='/' component={Login}/>
-        }
-        {isLogged &&
-          <>
-            <NavbarView/>
-<<<<<<< HEAD
-<<<<<<< HEAD
-            <Route exact path='/contents' component={Content} />
-=======
-            <Route exact path='/content' component={Content} />
->>>>>>> b6055a6... :sparkles: feat(login): check if user is already logged
-=======
-            <Route exact path='/contents' component={Content} />
->>>>>>> a97f3e9... :sparkles: feat(login): add login
-            <Route exact path='/categories' component={Cat} />
-            <Route exact path='/authors' component={Author} />
-          </>
-        }
+      <Router>
+        <Route exact path='/' component={Check}/>
+        <Route exact path='/login' component={Login}/>
+        <PrivateRoute exact path='/contents' component={Content} />
+        <PrivateRoute exact path='/categories' component={Categories} />
+        <PrivateRoute exact path='/authors' component={Author} />
       </Router>
     )
   }

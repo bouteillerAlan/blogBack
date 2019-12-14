@@ -1,125 +1,146 @@
 import * as React from 'react';
 import getData from "../function/getData";
+import handleLocalStorage from "../function/handleLocalStorage";
 
 interface Props {}
 interface State {
-    categoriesList: any,
-    name : string,
-    errorName : string,
-    callbackMessageForm : any,
-    callbackMessageData : any
+  categoriesList: any,
+  name : string,
+  errorName : string,
+  callbackMessageFormError : any,
+  callbackMessageFormSuccess: any,
+  callbackMessageData : any,
+  token: string
 }
 
 class Author extends React.Component<Props, State> {
-    constructor(props: any){
-        super(props);
-        this.state = {
-            categoriesList: null,
-            name : '',
-            errorName : '',
-            callbackMessageForm : null,
-            callbackMessageData : null
-        }
+  constructor(props: any){
+    super(props);
+    this.state = {
+      categoriesList: null,
+      name : '',
+      errorName : '',
+      callbackMessageFormError : null,
+      callbackMessageFormSuccess: null,
+      callbackMessageData : null,
+      token: ''
     }
+  }
 
-    componentDidMount(): any {
-        getData('http://localhost:3001/categories/all', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSGFkb2NrIiwic3ViIjoiNWQ4YTE2MWI3OWYwMGI3OTc4NzZiNzUyIiwiaWF0IjoxNTY5NDg5MjEwLCJleHAiOjE1Njk1MDEyMTB9.FSwflQEUvVoU_vbiUmngJSgCmuKB1ma8G9MfPHgHKQ8')
-            .then((res) => {
-                if (res.status) {
-                    this.setState({
-                        categoriesList: res.data
-                    })
-                }
+  componentDidMount(): any {
+    handleLocalStorage('read','jwt').then((res: any) => {
+      const token = res;
+      this.setState({token});
+      getData('http://localhost:3001/categories/all', token)
+        .then((res) => {
+          if (res.status) {
+            this.setState({
+              categoriesList: res.data.length > 0 ? res.data : null
             })
-            .catch((err) => {
-                this.setState({
-                    callbackMessageData : '[getData] ' + err.toString()
-                })
-            })
+          }
+        })
+        .catch((err) => {
+          this.setState({
+            callbackMessageData: '[getData] ' + err.toString()
+          })
+        })
+    })
+  }
+
+  handleForm = (e: any) => {
+    if (e.target.id === 'name') {
+      this.setState({name:e.target.value, errorName : e.target.value.length > 2 ? '' : 'min 2 characters'})
     }
+  };
 
-    handleForm = (e: any) => {
-        if (e.target.id === 'name') {
-            this.setState({name:e.target.value, errorName : e.target.value.length > 3 ? '' : 'min 3 characters'})
+  submitForm = (e: any) => {
+    e.preventDefault();
+    const {name, errorName, token} = this.state;
+
+    if (errorName === '') {
+      fetch('http://localhost:3001/categories/add', {
+        method : 'POST',
+        body : JSON.stringify({
+          name,
+        }),
+        headers : {
+          'Accept' : 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         }
-    };
+      })
+        .then((res) => {
+          res.json().then((resp) => {
+            if (resp.status) {
+              this.setState({
+                callbackMessageFormSuccess : `${resp.message} created!`,
+                callbackMessageFormError: '',
+                name : ''
+              })
+            } else {
+              this.setState({
+                callbackMessageFormSuccess : '',
+                callbackMessageFormError: resp.message,
+                name : ''
+              })
+            }
 
-    submitForm = (e: any) => {
-        e.preventDefault();
-        const {name, errorName} = this.state;
-
-        if (errorName === '') {
-            fetch('http://localhost:3001/categories/add', {
-                method : 'POST',
-                body : JSON.stringify({
-                    name,
-                }),
-                headers : {
-                    'Accept' : 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then((res) => {
-                    res.json().then((resp) => {
-                        console.log(resp);
-                        this.setState({
-                            callbackMessageForm : resp
-                        })
-                    })
-                })
-                .catch((err) => {
-                    this.setState({
-                        callbackMessageForm : '[postData] ' + err.toString()
-                    })
-                })
-        }
-    };
-
-    render() {
-        const {categoriesList, name, callbackMessageForm, callbackMessageData, errorName} = this.state;
-
-        return (
-            <section className="container">
-                {callbackMessageData&&
-                <div className="col-xs_12 error">
-                    {callbackMessageData}
-                </div>}
-                {categoriesList&&
-                <table className="center over breakWord">
-                    <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {categoriesList.map((el: any) => (
-                        <tr>
-                            <td>{el._id}</td>
-                            <td>{el.name}</td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>}
-
-                <div>
-                    <div className="input-block col-xs_6">
-                        <label htmlFor="name">Name </label>
-                        <input type="text" name="name" id="name" value={name} onChange={(event) => {this.handleForm(event)}}/>
-                        {errorName&& <span className="error">{errorName}</span>}
-                    </div>
-
-                    <div className="col-xs_12">
-                        <button className="submit" onClick={(event) => {this.submitForm(event)}}>Send</button>
-                    </div>
-
-                    <div className="col-xs_12">
-                        {callbackMessageForm&& <span className="error">{callbackMessageForm}</span>}
-                    </div>
-                </div>
-            </section>
-        )
+          })
+        })
+        .catch((err) => {
+          this.setState({
+            callbackMessageFormError : '[postData] ' + err.toString()
+          })
+        })
     }
+  };
+
+  render() {
+    const {categoriesList, name, callbackMessageFormError, callbackMessageFormSuccess, callbackMessageData, errorName} = this.state;
+
+    return (
+      <section className="container">
+        {callbackMessageData&&
+        <div className="col-xs_12 error">
+          {callbackMessageData}
+        </div>}
+        {categoriesList&&
+        <table className="center over breakWord">
+          <thead>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+          </tr>
+          </thead>
+          <tbody>
+          {categoriesList.map((el: any) => (
+            <tr key={el._id}>
+              <td>{el._id}</td>
+              <td>{el.name}</td>
+            </tr>
+          ))}
+          </tbody>
+        </table>}
+
+        <div>
+          <div className="input-block col-xs_6">
+            <label htmlFor="name">Name </label>
+            <input type="text" name="name" id="name" value={name} onChange={(event) => {this.handleForm(event)}}/>
+            {errorName&& <span className="error">{errorName}</span>}
+          </div>
+
+          <div className="col-xs_12">
+            <button className="submit" onClick={(event) => {this.submitForm(event)}}>Send</button>
+          </div>
+
+          <div className="col-xs_12">
+            {callbackMessageFormError&& <span className="error chips">{callbackMessageFormError}</span>}
+            {callbackMessageFormSuccess&& <span className="success chips">{callbackMessageFormSuccess}</span>}
+          </div>
+        </div>
+      </section>
+    )
+  }
 }
 
 export default Author;
