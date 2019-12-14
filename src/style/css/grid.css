@@ -1,0 +1,100 @@
+/*
+* ROW & CONTAINER RULES
+*/
+.container {
+    padding: 20px 0 0 0;
+}
+
+/*mobile rules*/
+@media screen and (min-width: 600px) {
+    .container {
+        width: 50%;
+        margin: 0 auto;
+    }
+}
+
+/*
+* COL RULES
+*/
+[class*="col-"] {
+    float: left;
+    padding: 10px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+.col-xs_1 {width: 8.33%}
+.col-xs_2 {width: 16.66%}
+.col-xs_3 {width: 25%}
+.col-xs_4 {width: 33.33%}
+.col-xs_5 {width: 41.66%}
+.col-xs_6 {width: 50%}
+.col-xs_7 {width: 58.33%}
+.col-xs_8 {width: 66.66%}
+.col-xs_9 {width: 75%}
+.col-xs_10 {width: 83.33%}
+.col-xs_11 {width: 91.66%}
+.col-xs_12 {width: 100%}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .col-x_1 {width: 8.33%}
+    .col-x_2 {width: 16.66%}
+    .col-x_3 {width: 25%}
+    .col-x_4 {width: 33.33%}
+    .col-x_5 {width: 41.66%}
+    .col-x_6 {width: 50%}
+    .col-x_7 {width: 58.33%}
+    .col-x_8 {width: 66.66%}
+    .col-x_9 {width: 75%}
+    .col-x_10 {width: 83.33%}
+    .col-x_11 {width: 91.66%}
+    .col-x_12 {width: 100%}
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .col-x_l_1 {width: 8.33%}
+    .col-x_l_2 {width: 16.66%}
+    .col-x_l_3 {width: 25%}
+    .col-x_l_4 {width: 33.33%}
+    .col-x_l_5 {width: 41.66%}
+    .col-x_l_6 {width: 50%}
+    .col-x_l_7 {width: 58.33%}
+    .col-x_l_8 {width: 66.66%}
+    .col-x_l_9 {width: 75%}
+    .col-x_l_10 {width: 83.33%}
+    .col-x_l_11 {width: 91.66%}
+    .col-x_l_12 {width: 100%}
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .col-l_1 {width: 8.33%}
+    .col-l_2 {width: 16.66%}
+    .col-l_3 {width: 25%}
+    .col-l_4 {width: 33.33%}
+    .col-l_5 {width: 41.66%}
+    .col-l_6 {width: 50%}
+    .col-l_7 {width: 58.33%}
+    .col-l_8 {width: 66.66%}
+    .col-l_9 {width: 75%}
+    .col-l_10 {width: 83.33%}
+    .col-l_11 {width: 91.66%}
+    .col-l_12 {width: 100%}
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .col-xl_1 {width: 8.33%}
+    .col-xl_2 {width: 16.66%}
+    .col-xl_3 {width: 25%}
+    .col-xl_4 {width: 33.33%}
+    .col-xl_5 {width: 41.66%}
+    .col-xl_6 {width: 50%}
+    .col-xl_7 {width: 58.33%}
+    .col-xl_8 {width: 66.66%}
+    .col-xl_9 {width: 75%}
+    .col-xl_10 {width: 83.33%}
+    .col-xl_11 {width: 91.66%}
+    .col-xl_12 {width: 100%}
+}

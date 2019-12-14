@@ -1,44 +1,120 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# css
+## grid
+The grid is set up on 12 columns.
 
-## Available Scripts
+List grid ``class`` : 
+ - ``container`` create a centered column if the device size is bigger than 600px, if is not the column take 100% width
+ - ``col-x_n`` utility class for responsive grid (see below), ``x`` is the size and ``n`` the number of columns that we want to take
 
-In the project directory, you can run:
+## col size breakpoint
+``xs`` < ``x`` < ``x_l`` < ``l`` < ``xl``
 
-### `npm start`
+ - ``xs`` extra small devices (600px and down) 
+ - ``x`` small devices (600px and up)
+ - ``x_l`` special class for small devices in landscape mode (768px and up)
+ - ``l`` large devices (992px and up)
+ - ``xl`` extra large devices (1200px and up)
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Each class is applicable in upper scale :
+```html
+<div class="col-xs_12"> // the xs_12 col size is setup for xs and upper
+    <!--some code-->
+</div>
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+<div class="col-xs_12 col-l_6"> // the xs_12 col size is setup for xs and x and x_l, the l_6 col size is setup for l and upper
+    <!--some code-->
+</div>
+```
 
-### `npm test`
+#### **Important**
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**if you set the col size like this, the size is setup only for l and upper :** 
+*which means that the size of the col below l will be in auto*
+```html
+<div class="col-l_6">
+    <!--some code-->
+</div>
+```
 
-### `npm run build`
+## container breakpoint
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The container uses this rule for all devices except for extra small device : 
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+```css
+.container {
+    width: 50%;
+    margin: 0 auto;
+}
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+For extra small device : 
+```css
+.container {
+    width: auto;
+}
+```
 
-### `npm run eject`
+## form
+Example : 
+```html
+<section className="container row">
+    <div className="input-block col-xs_6">
+        <label htmlFor="firstName">First name </label>
+        <input type="text" name="firstName" id="firstName"/>
+    </div>
+    
+    <div className="input-block col-xs_6">
+        <label htmlFor="lastName">Last name </label>
+        <input type="text" name="lastName" id="lastName"/>
+    </div>
+    
+    <div className="input-block col-xs_12 col-l_12">
+        <label htmlFor="password">Password </label>
+        <input type="password" name="password" id="password"/>
+    </div>
+    
+    <div className="input-block col-xs_12 col-l_12">
+        <label htmlFor="password">Message </label>
+        <textarea name="message" id="message">
+        </textarea>
+    </div>
+    
+    <div className="col-xs_12 col-l_12">
+        <button className="submit">Send</button>
+    </div>
+</section>
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## table
+Table have two custom class : 
+ - ``over`` allow to have a highlight over the focus in each line (tbody)
+ - ``center`` allow to center the columns (thead and tbody)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Example :
+ 
+**Important : tbody and thead is required all the time**
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```html
+<table className="center over">
+    <caption>Authors</caption>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Last Name</th>
+            <th>Total Articles</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Jill</td>
+            <td>Smith</td>
+            <td>50</td>
+        </tr>
+        <tr>
+            <td>Eve</td>
+            <td>Jackson</td>
+            <td>94</td>
+        </tr>
+    </tbody>
+</table>
+```

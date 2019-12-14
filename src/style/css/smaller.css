@@ -1,17 +1,8 @@
 /*font*/
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
-/*reset*/
 * {
-    margin: 0;
-    padding: 0;
-    border: 0;
     font-family: 'Roboto', sans-serif;
-}
-
-/*scroll*/
-html {
-    scroll-behavior: smooth;
 }
 
 /*colors*/
@@ -24,24 +15,61 @@ html {
     /*light theme*/
     --light-background : #ecf0f1;
     --light-text : #282c34;
+    --light-focus : #464a4b;
+    --light-shadow : rgba(0, 0, 0, 0.14) 0 2px 2px 0, rgba(0, 0, 0, 0.12) 0 3px 1px -2px, rgba(0, 0, 0, 0.2) 0 1px 5px 0;
+    /*other*/
+    --second-background : #efbb35;
+    --primary-ko : #e74c3c;
+    --primary-ok : #2ecc71;
+    /*apply*/
+    --primary-background : var(--dark-background);
+    --primary-text : var(--dark-text);
+    --primary-shadow : var(--dark-shadow);
+    --primary-focus : var(--dark-focus);
+}
+
+.back-red {
+    background-color: var(--primary-ko);
+}
+
+.back-green {
+    background-color: var(--primary-ok);
+}
+
+.text-red {
+    color: var(--primary-ko);
+}
+
+.text-green {
+    color: var(--primary-ok);
+}
+
+.error {
+    background-color: var(--primary-ko);
+    color: var(--dark-text);
+}
+
+.success {
+    background-color: var(--primary-ok);
+    color: var(--dark-text);
 }
 
 /*body*/
 body {
-    background-color: var(--dark-background);
-    color: var(--dark-text);
+    background-color: var(--primary-background);
+    color: var(--primary-text);
 }
 
 /*navbar*/
 .navbar {
-    background-color: var(--dark-background);
+    background-color: var(--primary-background);
     width: 100%;
     height: 60px;
-    box-shadow: var(--dark-shadow);
+    box-shadow: var(--primary-shadow);
 }
 
 .navbar a {
-    color: var(--dark-text);
+    color: var(--primary-text);
     text-decoration: none;
 }
 
@@ -55,15 +83,112 @@ body {
     height: 42px;
     padding: 18px 15px 0 15px;
     transition: 0.25s;
+    box-sizing: initial;
 }
 
 .navbar ul li:hover {
-    background-color: var(--dark-focus);
-    color: var(--dark-text);
+    background-color: var(--primary-focus);
+    color: var(--primary-text);
     cursor: pointer;
 }
 
-/*section*/
-section {
+/*input*/
+.input-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-block span {
+    padding: 5px;
+}
+
+.input-block label {
+    padding: 0 0 5px 0;
+}
+
+input {
+    height: 1.5em;
+    padding-bottom: 2px;
+}
+
+textarea {
+    resize: none;
+    min-height: 5rem;
+}
+
+input[type=text], input[type=password], textarea {
+    color: var(--primary-text);
+    background-color: var(--primary-background);
+    border-bottom: solid var(--second-background) 2px;
+}
+
+textarea:focus, input:focus {
+    outline: none;
+}
+
+/*fixme need rework about -moz- -o- -webkit- */
+/*input style if is auto completed*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--primary-text);
+    -webkit-box-shadow: 0 0 0 1000px var(--primary-background) inset;
+}
+
+/*button*/
+button {
+    padding: 5px 10px 5px 10px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    background-color: var(--second-background);
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+/*table*/
+table {
+    width: 100%;
+    max-width: 100% !important;
+}
+
+table[class*="center"] td, table[class*="center"] th {
+    text-align: center;
+}
+
+table, th, td {
+    border-bottom: 1px solid var(--second-background);
+    border-collapse: collapse;
+}
+
+th, td {
     padding: 15px;
+    text-align: left;
+    min-width: 100px;
+}
+
+table[class*="breakAll"] > tbody td {
+    word-break: break-all;
+}
+
+table[class*="breakWord"] > tbody td {
+    word-break: break-word;
+}
+
+table[class*="over"] > tbody tr:hover {
+    background-color: var(--primary-focus);
+    cursor: pointer;
+}
+
+/* chips */
+.chips {
+    padding: 10px;
+    border-radius: 3px;
 }
