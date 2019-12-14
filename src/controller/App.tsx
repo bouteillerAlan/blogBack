@@ -11,6 +11,11 @@ import NavbarView from '../view/Navbar.view';
 import Login from '../controller/Login';
 import handleLocalStorage from '../function/handleLocalStorage';
 import getData from '../function/getData';
+<<<<<<< HEAD
+=======
+// history
+const history = createBrowserHistory();
+>>>>>>> b6055a6... :sparkles: feat(login): check if user is already logged
 
 interface Props {}
 interface State {
@@ -47,7 +52,11 @@ class App extends React.Component<Props, State> {
         {isLogged &&
           <>
             <NavbarView/>
+<<<<<<< HEAD
             <Route exact path='/contents' component={Content} />
+=======
+            <Route exact path='/content' component={Content} />
+>>>>>>> b6055a6... :sparkles: feat(login): check if user is already logged
             <Route exact path='/categories' component={Cat} />
             <Route exact path='/authors' component={Author} />
           </>
